@@ -841,10 +841,21 @@ function DomainPage() {
             >
               收藏詳情
             </h2>
-            <p className="mt-1 text-xs text-[var(--sea-ink-soft)]">
-              {modalCollection.lat.toFixed(6)}, {modalCollection.lng.toFixed(6)}{" "}
-              （唯讀）
-            </p>
+            <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
+              <p className="text-xs text-[var(--sea-ink-soft)]">
+                {modalCollection.lat.toFixed(6)},{" "}
+                {modalCollection.lng.toFixed(6)} （唯讀）
+              </p>
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${modalCollection.lat},${modalCollection.lng}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 rounded-full border border-[var(--border-cta-strong)] bg-[var(--fill-badge-strong)] px-2.5 py-1 text-xs font-semibold text-[var(--lagoon-deep)] transition hover:bg-[var(--fill-badge-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]"
+              >
+                在 Google Maps 開啟
+                <span aria-hidden>↗</span>
+              </a>
+            </div>
             <p className="mt-1 text-xs text-[var(--sea-ink-soft)]">
               加入於 {formatCollectionCreatedAt(modalCollection.createdAt)}
             </p>
