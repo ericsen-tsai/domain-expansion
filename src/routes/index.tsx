@@ -51,6 +51,25 @@ function formatCollectionCreatedAt(iso: string): string {
   }
 }
 
+function createMarkerIconElement(): HTMLElement {
+  const wrapper = document.createElement("div");
+  wrapper.className = "custom-map-marker";
+  wrapper.style.transform = "translateY(-4px)";
+  const img = document.createElement("img");
+  img.src = "/apple-touch-icon.png";
+  img.alt = "";
+  img.width = 36;
+  img.height = 36;
+  img.style.display = "block";
+  img.style.width = "36px";
+  img.style.height = "36px";
+  img.style.borderRadius = "9999px";
+  img.style.border = "2px solid #ffffff";
+  img.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.25)";
+  wrapper.appendChild(img);
+  return wrapper;
+}
+
 function readMapPolygonColors(): { stroke: string; fill: string } {
   const root = document.documentElement;
   const stroke = getComputedStyle(root)
@@ -306,6 +325,7 @@ function DomainPage() {
           position: { lat: c.lat, lng: c.lng },
           title: c.name,
           gmpClickable: true,
+          content: createMarkerIconElement(),
         });
         const id = c.id;
         const ac = new AbortController();
@@ -381,6 +401,7 @@ function DomainPage() {
             map: mapRef.current!,
             position: { lat, lng },
             title: place.displayName ?? "結果",
+            content: createMarkerIconElement(),
           },
         );
 
