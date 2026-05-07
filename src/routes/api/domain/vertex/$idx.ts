@@ -3,6 +3,7 @@ import { asc, eq } from 'drizzle-orm'
 
 import { db } from '#/db/client'
 import { domainVertices } from '#/db/schema'
+import { assertAppSession } from '#/server/app-session'
 import { assertDomainSecret } from '#/server/auth'
 import { parseLatLng, parseVertexIndex } from '#/server/validation'
 
@@ -10,6 +11,7 @@ export const Route = createFileRoute('/api/domain/vertex/$idx')({
   server: {
     handlers: {
       PUT: async ({ params, request }) => {
+        assertAppSession(request)
         assertDomainSecret(request)
 
         const idx = parseVertexIndex(params.idx)

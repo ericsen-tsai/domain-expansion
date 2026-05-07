@@ -8,6 +8,13 @@
       "when": 1778074072223,
       "tag": "0000_kind_wendigo",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1778116873961,
+      "tag": "0001_premium_silver_fox",
+      "breakpoints": true
     }
   ]
 }

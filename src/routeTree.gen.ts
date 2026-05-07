@@ -9,10 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiDomainRouteImport } from './routes/api/domain'
+import { Route as ApiCollectionsRouteImport } from './routes/api/collections'
+import { Route as ApiCollectionsIdRouteImport } from './routes/api/collections/$id'
+import { Route as ApiAuthMeRouteImport } from './routes/api/auth/me'
+import { Route as ApiAuthLogoutRouteImport } from './routes/api/auth/logout'
+import { Route as ApiAuthLoginRouteImport } from './routes/api/auth/login'
 import { Route as ApiDomainVertexIdxRouteImport } from './routes/api/domain/vertex/$idx'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -23,6 +34,31 @@ const ApiDomainRoute = ApiDomainRouteImport.update({
   path: '/api/domain',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiCollectionsRoute = ApiCollectionsRouteImport.update({
+  id: '/api/collections',
+  path: '/api/collections',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCollectionsIdRoute = ApiCollectionsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApiCollectionsRoute,
+} as any)
+const ApiAuthMeRoute = ApiAuthMeRouteImport.update({
+  id: '/api/auth/me',
+  path: '/api/auth/me',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthLogoutRoute = ApiAuthLogoutRouteImport.update({
+  id: '/api/auth/logout',
+  path: '/api/auth/logout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthLoginRoute = ApiAuthLoginRouteImport.update({
+  id: '/api/auth/login',
+  path: '/api/auth/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiDomainVertexIdxRoute = ApiDomainVertexIdxRouteImport.update({
   id: '/vertex/$idx',
   path: '/vertex/$idx',
@@ -31,35 +67,93 @@ const ApiDomainVertexIdxRoute = ApiDomainVertexIdxRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/api/collections': typeof ApiCollectionsRouteWithChildren
   '/api/domain': typeof ApiDomainRouteWithChildren
+  '/api/auth/login': typeof ApiAuthLoginRoute
+  '/api/auth/logout': typeof ApiAuthLogoutRoute
+  '/api/auth/me': typeof ApiAuthMeRoute
+  '/api/collections/$id': typeof ApiCollectionsIdRoute
   '/api/domain/vertex/$idx': typeof ApiDomainVertexIdxRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/api/collections': typeof ApiCollectionsRouteWithChildren
   '/api/domain': typeof ApiDomainRouteWithChildren
+  '/api/auth/login': typeof ApiAuthLoginRoute
+  '/api/auth/logout': typeof ApiAuthLogoutRoute
+  '/api/auth/me': typeof ApiAuthMeRoute
+  '/api/collections/$id': typeof ApiCollectionsIdRoute
   '/api/domain/vertex/$idx': typeof ApiDomainVertexIdxRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/api/collections': typeof ApiCollectionsRouteWithChildren
   '/api/domain': typeof ApiDomainRouteWithChildren
+  '/api/auth/login': typeof ApiAuthLoginRoute
+  '/api/auth/logout': typeof ApiAuthLogoutRoute
+  '/api/auth/me': typeof ApiAuthMeRoute
+  '/api/collections/$id': typeof ApiCollectionsIdRoute
   '/api/domain/vertex/$idx': typeof ApiDomainVertexIdxRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/domain' | '/api/domain/vertex/$idx'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/api/collections'
+    | '/api/domain'
+    | '/api/auth/login'
+    | '/api/auth/logout'
+    | '/api/auth/me'
+    | '/api/collections/$id'
+    | '/api/domain/vertex/$idx'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/domain' | '/api/domain/vertex/$idx'
-  id: '__root__' | '/' | '/api/domain' | '/api/domain/vertex/$idx'
+  to:
+    | '/'
+    | '/login'
+    | '/api/collections'
+    | '/api/domain'
+    | '/api/auth/login'
+    | '/api/auth/logout'
+    | '/api/auth/me'
+    | '/api/collections/$id'
+    | '/api/domain/vertex/$idx'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/api/collections'
+    | '/api/domain'
+    | '/api/auth/login'
+    | '/api/auth/logout'
+    | '/api/auth/me'
+    | '/api/collections/$id'
+    | '/api/domain/vertex/$idx'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LoginRoute: typeof LoginRoute
+  ApiCollectionsRoute: typeof ApiCollectionsRouteWithChildren
   ApiDomainRoute: typeof ApiDomainRouteWithChildren
+  ApiAuthLoginRoute: typeof ApiAuthLoginRoute
+  ApiAuthLogoutRoute: typeof ApiAuthLogoutRoute
+  ApiAuthMeRoute: typeof ApiAuthMeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -74,6 +168,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiDomainRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/collections': {
+      id: '/api/collections'
+      path: '/api/collections'
+      fullPath: '/api/collections'
+      preLoaderRoute: typeof ApiCollectionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/collections/$id': {
+      id: '/api/collections/$id'
+      path: '/$id'
+      fullPath: '/api/collections/$id'
+      preLoaderRoute: typeof ApiCollectionsIdRouteImport
+      parentRoute: typeof ApiCollectionsRoute
+    }
+    '/api/auth/me': {
+      id: '/api/auth/me'
+      path: '/api/auth/me'
+      fullPath: '/api/auth/me'
+      preLoaderRoute: typeof ApiAuthMeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/logout': {
+      id: '/api/auth/logout'
+      path: '/api/auth/logout'
+      fullPath: '/api/auth/logout'
+      preLoaderRoute: typeof ApiAuthLogoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/login': {
+      id: '/api/auth/login'
+      path: '/api/auth/login'
+      fullPath: '/api/auth/login'
+      preLoaderRoute: typeof ApiAuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/domain/vertex/$idx': {
       id: '/api/domain/vertex/$idx'
       path: '/vertex/$idx'
@@ -83,6 +212,18 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface ApiCollectionsRouteChildren {
+  ApiCollectionsIdRoute: typeof ApiCollectionsIdRoute
+}
+
+const ApiCollectionsRouteChildren: ApiCollectionsRouteChildren = {
+  ApiCollectionsIdRoute: ApiCollectionsIdRoute,
+}
+
+const ApiCollectionsRouteWithChildren = ApiCollectionsRoute._addFileChildren(
+  ApiCollectionsRouteChildren,
+)
 
 interface ApiDomainRouteChildren {
   ApiDomainVertexIdxRoute: typeof ApiDomainVertexIdxRoute
@@ -98,7 +239,12 @@ const ApiDomainRouteWithChildren = ApiDomainRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LoginRoute: LoginRoute,
+  ApiCollectionsRoute: ApiCollectionsRouteWithChildren,
   ApiDomainRoute: ApiDomainRouteWithChildren,
+  ApiAuthLoginRoute: ApiAuthLoginRoute,
+  ApiAuthLogoutRoute: ApiAuthLogoutRoute,
+  ApiAuthMeRoute: ApiAuthMeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
